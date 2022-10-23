@@ -21,7 +21,7 @@ const notes = debounce(e => {
             else if (data.length === 0) {
                 Notify.failure('Oops, there is no country with that name');
             }
-            else if (data >= 2 && data <= 10) {
+            else if (data.length >= 2 && data.length <= 10) {
                 renderCountryList(data);
             }
             else if (data.length === 1) {
@@ -35,25 +35,25 @@ const notes = debounce(e => {
 input.addEventListener('input', notes);
 
 function renderCountryList(countries) {
-    const markup = countries.map(country => {
+    const markup = countries.map(({flags,name}) => {
         return `<li>
-      <img src="${country.flags.svg}" alt="Flag of ${country.name.official
+      <img src="${flags.svg}" alt="Flag of ${name.common
             }" width="30" hight="20">
-         <b>${country.name.official}</p>
+         <b>${name.common}</p>
                 </li>`;
     }).join('');
     countryList.innerHTML = markup;
 };
 
 function renderOneCountry(countries) {
-    const markup = countries.map(country => {
+    const markup = countries.map(({flags, name, capital, population, languages}) => {
         return `<li>
-      <img src="${country.flags.svg}" alt="Flag of ${country.name.official
+      <img src="${flags.svg}" alt="Flag of ${name.official
             }" width="30" hight="20">
-         <b>${country.name.official}</b></p>
-            <p><b>Capital</b>: ${country.capital}</p>
-            <p><b>Population</b>: ${country.population}</p>
-            <p><b>Languages</b>: ${Object.values(country.languages)} </p>
+         <b>${name.official}</b></p>
+            <p><b>Capital</b>: ${capital}</p>
+            <p><b>Population</b>: ${population}</p>
+            <p><b>Languages</b>: ${Object.values(languages)} </p>
                 </li>`;
     }).join(''); 
     countryList.innerHTML = markup;
